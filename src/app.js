@@ -6,6 +6,10 @@ const app = express();
 
 const { accounts, users, writeJSON } = require('./data');
 
+const accountRoutes = require('./routes/accounts.js');
+
+const servicesRoutes = require('./routes/services.js');
+
 app.set('views', path.join(__dirname + '/views'));
 app.set('view engine', 'ejs');
 
@@ -22,6 +26,11 @@ const users = JSON.parse(userData);
 
 app.get('/', (req, res) => res.render('index', { title: 'Account Summary', accounts }));
 
+app.use('/account', accountRoutes);
+
+app.use('/services', servicesRoutes);
+
+/*
 app.get('/savings', (req, res) => res.render('account', { account: accounts.savings }));
 app.get('/checking', (req, res) => res.render('account', { account: accounts.checking }));
 app.get('/credit', (req, res) => res.render('account', { account: accounts.credit }));
@@ -41,6 +50,7 @@ app.post('/payment', (req, res) => {
  writeJSON();
  res.render('payment', { message: 'Payment Successful', account: accounts.credit });
 });
+*/
 
 app.get('/profile', (req, res) => res.render('profile', { user: users[0] }));
 
